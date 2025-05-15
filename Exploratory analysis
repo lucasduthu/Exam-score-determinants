@@ -1,0 +1,419 @@
+# PACKAGES
+install.packages("readxl")
+library(readxl)
+install.packages("readr")
+install.packages("dplyr")
+library (readr)
+library(dplyr)
+install.packages("ggplot2")
+install.packages("ggthemes")
+library(ggthemes)
+library(ggplot2)
+install.packages("showtext")
+library(showtext)
+install.packages("sysfonts")
+library(sysfonts)
+install.packages("car")
+library(car)
+install.packages("sandwich")
+install.packages("lmtest")
+library(sandwich)
+library(lmtest)
+install.packages("modelsummary")
+install.packages("pandoc")
+library(modelsummary)
+library(pandoc)
+install.packages(c("glmnet", "broom", "flextable", "officer"))
+library(glmnet)
+library(broom)
+library(flextable)
+library(officer)
+install.packages("rpart")
+install.packages("rpart.plot")
+library(rpart)
+library(rpart.plot)
+install.packages("forcats")
+library(forcats)
+install.packages("ggExtra")
+library(ggExtra)
+library(ggplot2)
+
+# IMPORT DATASET
+df <- read.csv("/Users/lucasduthu-paloumet/Library/Mobile Documents/com~apple~CloudDocs/Perso/Data science/Data bases/student_habits_performance.csv")
+
+# IMPORT FONT
+font_add(family = "Arial", regular = "/Users/lucasduthu-paloumet/Library/Mobile Documents/com~apple~CloudDocs/Perso/font/arial/ARIAL.TTF", bold = "/Users/lucasduthu-paloumet/Library/Mobile Documents/com~apple~CloudDocs/Perso/font/arial/ARIALBD.TTF", italic = "/Users/lucasduthu-paloumet/Library/Mobile Documents/com~apple~CloudDocs/Perso/font/arial/ARIALI.TTF", bolditalic = "/Users/lucasduthu-paloumet/Library/Mobile Documents/com~apple~CloudDocs/Perso/font/arial/ARIALBI 1.TTF")
+showtext_auto()
+font_families()
+
+
+# COLORS 
+Stata_blue <- colorRampPalette(c("#1A85FF", "white"))(11)
+scales::show_col(Stata_blue)
+Stata_pink <- colorRampPalette(c("#D41159", "white"))(11)
+scales::show_col(Stata_pink)
+Stata_green <- colorRampPalette(c("#00BF7F", "white"))(11)
+scales::show_col(Stata_green)
+Stata_yellow <- colorRampPalette(c("#FFD400", "white"))(11)
+scales::show_col(Stata_yellow)
+Stata_purple <- colorRampPalette(c("#4F2C99", "white"))(11)
+scales::show_col(Stata_purple)
+Stata_orange <- colorRampPalette(c("#FF6333", "white"))(11)
+scales::show_col(Stata_orange)
+Stata_skyblue <- colorRampPalette(c("#4DB7FF", "white"))(11)
+scales::show_col(Stata_skyblue)
+Stata_darkred <- colorRampPalette(c("#7C0015", "white"))(11)
+scales::show_col(Stata_darkred)
+Stata_cyan <- colorRampPalette(c("#0FEFAF", "white"))(11)
+scales::show_col(Stata_cyan)
+Stata_mandarine <- colorRampPalette(c("#FAA307", "white"))(11)
+scales::show_col(Stata_mandarine)
+Stata_lavender <- colorRampPalette(c("#758BFD", "white"))(11)
+scales::show_col(Stata_lavender)
+Stata_skin <- colorRampPalette(c("#FED9B7", "white"))(11)
+scales::show_col(Stata_skin)
+Stata_darkblue <- colorRampPalette(c("#08234C", "white"))(11)
+scales::show_col(Stata_darkblue)
+Stata_lightpink <- colorRampPalette(c("#F88DAD", "white"))(11)
+scales::show_col(Stata_lightpink)
+Stata_darkcyan <- colorRampPalette(c("#0F5156", "white"))(11)
+scales::show_col(Stata_darkcyan)
+
+
+Stata_color_theme <- colorRampPalette(c("#1A85FF", "#D41159", "#00BF7F", "#FFD400", "#4F2C99", 
+                                        "#FF6333", "#4DB7FF", "#7C0015", "#0FEFAF", "#FAA307", 
+                                        "#758BFD", "#FED9B7", "#08234C", "#F88DAD", "#0F5156"))(15)
+scales::show_col(Stata_color_theme)
+
+
+
+
+
+# BARCHART EMPILÉ
+
+df$Var1 <- df$age
+
+df$Var1 <- as.factor(df$Var1)
+e1 <- {
+ggplot(df, aes(x = Var1)) +
+  geom_bar(width = 0.97, color = Stata_blue[1], fill = Stata_blue[1]) +
+  labs(
+    title = "Age distrib ",
+    x = "Age factors"
+  ) +
+  my_theme_stata()
+}
+
+
+
+
+df$Var1 <- df$gender
+df$Var1 <- as.factor(df$Var1)
+e2 <- {
+ggplot(df, aes(x = Var1)) +
+  geom_bar(width = 0.97, color = Stata_blue[1], fill = Stata_blue[1]) +
+  labs(
+    title = "Gender distrib ",
+    x = "Gender factors"
+  ) +
+  my_theme_stata()
+}
+
+
+
+
+df$Var2 <- df$study_hours_per_day
+df$Var2 <- as.numeric(df$Var2)
+df$Var1 <- df$gender
+df$Var1 <- as.factor(df$Var1)
+
+my_theme_stata <- function() {
+  theme_classic() +
+    theme(axis.line = element_line(color = "black",
+                                   linewidth = 0.3), 
+          panel.grid.major.x = element_line(color = "#F1F1F2", 
+                                            linewidth = 0.3, 
+                                            linetype = "longdash"), 
+          axis.title.x = element_text(size = 10, 
+                                      vjust = 0, 
+                                      family = "Arial"), 
+          axis.title.y = element_text(size = 10, 
+                                      vjust = 0, 
+                                      family = "Arial"),
+          axis.text.x = element_text(size = 10, 
+                                     vjust = 0.1, 
+                                     family = "Arial"), 
+          axis.text.y = element_text(size = 10, 
+                                     vjust = 0.1, 
+                                     family = "Arial"), 
+          legend.text = element_text(family = "Arial"),
+          legend.title = element_text(family = "Arial"),
+          axis.ticks = element_blank(), 
+          plot.title = element_text(size = 12, 
+                                    family = "Arial", 
+                                    hjust = 0.5),
+          plot.subtitle = element_text(family = "Arial", 
+                                       size = 10),
+          plot.margin = ggplot2::margin(1, 1, 1, 1, "cm") ) }
+showtext_begin()
+e3 <- {
+ggplot(df, aes(x = Var1,
+               y = Var2)) +
+  stat_boxplot(geom = "errorbar", width = 0.5, position = position_dodge(width = 0.8), color = Stata_blue[1]) +
+  geom_boxplot(position = position_dodge(width = 0.6), 
+               width = 0.7, 
+               size = 0.4, 
+               outlier.size = 1, 
+               outlier.shape = 1,
+               outlier.alpha = 0.8, 
+               color = Stata_blue[1],
+               fill = Stata_blue[5]) +
+  coord_flip() + 
+  labs(title = "Studying time by genders", 
+       x = "Studying time p/ day (h)", 
+       y = "") +
+  my_theme_stata()
+}
+
+
+df$Var2 <- df$social_media_hours
+df$Var2 <- as.numeric(df$Var2)
+df$Var1 <- df$gender
+df$Var1 <- as.factor(df$Var1)
+e4 <- {
+  ggplot(df, aes(x = Var1,
+                 y = Var2)) +
+    stat_boxplot(geom = "errorbar", width = 0.5, position = position_dodge(width = 0.8), color = Stata_blue[1]) +
+    geom_boxplot(position = position_dodge(width = 0.6), 
+                 width = 0.7, 
+                 size = 0.4, 
+                 outlier.size = 1, 
+                 outlier.shape = 1,
+                 outlier.alpha = 0.8, 
+                 color = Stata_blue[1],
+                 fill = Stata_blue[5]) +
+    coord_flip() + 
+    labs(title = "Social Media time by gender", 
+         x = "Social media time p/ day (h)", 
+         y = "") +
+    my_theme_stata()
+}
+
+
+df$Var2 <- df$netflix_hours
+df$Var2 <- as.numeric(df$Var2)
+df$Var1 <- df$gender
+df$Var1 <- as.factor(df$Var1)
+e5 <- {
+  ggplot(df, aes(x = Var1,
+                 y = Var2)) +
+    stat_boxplot(geom = "errorbar", width = 0.5, position = position_dodge(width = 0.8), color = Stata_blue[1]) +
+    geom_boxplot(position = position_dodge(width = 0.6), 
+                 width = 0.7, 
+                 size = 0.4, 
+                 outlier.size = 1, 
+                 outlier.shape = 1,
+                 outlier.alpha = 0.8, 
+                 color = Stata_blue[1],
+                 fill = Stata_blue[5]) +
+    coord_flip() + 
+    labs(title = "Netflix time distrib by gender", 
+         x = "Netflix time p/ day (h)", 
+         y = "") +
+    my_theme_stata()
+}
+
+
+df$Var1 <- df$part_time_job
+df$Var2 <- df$gender
+df$Var2 <- as.factor(df$Var2)
+e6 <- {
+ggplot(df, aes(x = factor(Var1), fill = Var2)) + 
+  geom_bar(position = 'fill', width = 0.97, alpha = 1) + 
+  labs(title = "Part time job by gender", 
+       x = "") + 
+  scale_color_manual(values = c("Male" = Stata_blue[1],
+                                "Female" = Stata_pink[1],
+                                "Other" = Stata_green[1])) +
+  scale_fill_manual(values = c("Male" = Stata_blue[1],
+                               "Female" = Stata_pink[1],
+                               "Other" = Stata_green[1])) + 
+  my_theme_stata()
+}
+
+
+
+plot(e6)
+
+
+
+
+
+
+
+
+
+##########################################
+
+Var1_label <- "Study hours p/ day"
+Var2_label <- "Exam Score"
+
+
+Graph_title <- "Studying on Exam Score"
+##########################################
+my_theme_stata <- function() {
+  theme_classic() +
+    theme(axis.line = element_line(color = "black",
+                                   linewidth = 0.3), 
+          panel.grid.major.y = element_line(color = "#F1F1F2", 
+                                            linewidth = 0.3, 
+                                            linetype = "longdash"), 
+          panel.grid.major.x = element_line(color = "#F1F1F2", 
+                                            linewidth = 0.3, 
+                                            linetype = "longdash"), 
+          axis.title.x = element_text(size = 10, 
+                                      vjust = 0, 
+                                      family = "Arial"), 
+          axis.title.y = element_text(size = 10, 
+                                      vjust = 0, 
+                                      family = "Arial"),
+          axis.text.x = element_text(size = 10, 
+                                     vjust = 0.1, 
+                                     family = "Arial"), 
+          axis.text.y = element_text(size = 10, 
+                                     vjust = 0.1, 
+                                     family = "Arial"), 
+          legend.text = element_text(family = "Arial"),
+          legend.title = element_text(family = "Arial"),
+          axis.ticks = element_blank(), 
+          plot.title = element_text(size = 12, 
+                                    family = "Arial", 
+                                    hjust = 0.5),
+          plot.subtitle = element_text(family = "Arial", 
+                                       size = 10),
+          plot.margin = ggplot2::margin(1, 1, 1, 1, "cm")) }
+
+e7 <- {
+ggplot(df, aes(x = study_hours_per_day, 
+               y = exam_score, color = gender)) + 
+  geom_point(
+             alpha = 0.4,
+             size = 1
+             ) + 
+  geom_smooth(color = Stata_color_theme[5],
+              method = "lm", 
+              se = FALSE, 
+              linewidth = 0.5
+              ) + 
+  labs(title = Graph_title,
+       x = Var1_label, 
+       y = Var2_label
+       ) +
+  my_theme_stata() + 
+  scale_color_manual(values = c("Male" = Stata_blue[1], "Female" = Stata_pink[1], "Other" = Stata_green[1]))
+}
+
+ggMarginal(e7, 
+           type = "density", 
+           color = "white",
+           margins = "both", 
+           size = 5,
+           groupColour = TRUE
+)
+
+
+
+
+
+
+
+df$Var1 <- df$mental_health_rating
+df$Var1 <- as.numeric(df$mental_health_rating)
+df$Var2 <- df$gender
+df$Var2 <- as.factor(df$Var2)
+e6 <- {
+  ggplot(
+    df, 
+    aes(
+      x = factor(
+        Var1
+        ), 
+      fill = Var2)) + 
+    geom_bar(position = "dodge", width = 0.97, alpha = 1) + 
+    labs(title = "Part time job by gender", 
+         x = "") + 
+    scale_fill_manual(
+      values = c(
+        "Male" = Stata_blue[1],
+        "Female" = Stata_pink[1],
+        "Other" = Stata_green[1])) + 
+    scale_color_manual(
+      values = c(
+        "Male" = Stata_blue[1],
+        "Female" = Stata_pink[1],
+        "Other" = Stata_green[1])) +
+    my_theme_stata(
+      
+    )
+}
+plot(
+  e6
+  )
+
+
+
+
+
+
+
+model1 <- lm(
+  exam_score ~ 
+    age + 
+    gender + 
+    study_hours_per_day +
+    social_media_hours + 
+    netflix_hours + 
+    part_time_job + 
+    attendance_percentage + 
+    sleep_hours + 
+    diet_quality + 
+    exercise_frequency + 
+    parental_education_level + 
+    internet_quality + 
+    mental_health_rating + 
+    extracurricular_participation, 
+  data = df)
+
+summary(model1)
+
+summary_df <- summary(df)
+
+
+
+
+palette_rgb <- c("blue", "cyan", "green", "yellow", "orange", "red")
+scale_fill_gradientn(colors = palette_rgb)
+e8 <- {
+ggplot(df, aes(x=study_hours_per_day, y=exam_score) ) +
+  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) + 
+  scale_x_continuous(expand = c(0.02, 0)) +
+  scale_y_continuous(expand = c(0.02, 0)) + 
+  scale_fill_distiller(palette= 13, direction=1) +
+  my_theme_stata() + 
+  theme(legend.position = 'none') +
+    labs(title = "Density plot w/ medians",
+         x = "Studying Hours p/ day", 
+         y = "Exam Score") + 
+    geom_vline(xintercept = median(df$study_hours_per_day, na.rm = TRUE),
+               linetype = "dashed", color = "black") + 
+    geom_hline(yintercept = median(df$exam_score, na.rm = TRUE),
+               linetype = "dashed", color = "black")  + 
+    geom_smooth(method = "lm", 
+                se = FALSE, 
+                color = "black", 
+                linetype = "dotted", 
+                linewidth = 0.7)
+}
+plot(e8)
+
+
